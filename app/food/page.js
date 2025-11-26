@@ -1,8 +1,8 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
-export default function FoodPage() {
+function FoodContent() {
   const router = useRouter();
   const params = useSearchParams();
 
@@ -45,5 +45,19 @@ export default function FoodPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function FoodPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-pink-100">
+          <div className="text-black text-xl">Loading...</div>
+        </div>
+      }
+    >
+      <FoodContent />
+    </Suspense>
   );
 }

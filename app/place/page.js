@@ -1,7 +1,8 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function PlacePage() {
+function PlaceContent() {
   const router = useRouter();
   const params = useSearchParams();
   const date = params.get("date");
@@ -34,5 +35,19 @@ export default function PlacePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function PlacePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-pink-100">
+          <div className="text-black text-xl">Loading...</div>
+        </div>
+      }
+    >
+      <PlaceContent />
+    </Suspense>
   );
 }
