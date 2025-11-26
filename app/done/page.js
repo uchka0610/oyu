@@ -1,9 +1,10 @@
 // app/done/page.js
-"use client"; // ← make the entire page client-side
+"use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function DonePage() {
+function DoneContent() {
   const params = useSearchParams();
   const date = params.get("date");
   const place = params.get("place");
@@ -32,5 +33,19 @@ export default function DonePage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function DonePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-pink-100">
+          <div className="text-black text-xl">Loading...</div>
+        </div>
+      }
+    >
+      <DoneContent />
+    </Suspense>
   );
 }
